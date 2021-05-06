@@ -12,6 +12,7 @@ namespace TamagotchiAPI.Models
         public DbSet<Feeding> Feedings { get; set; }
         public DbSet<Playtime> Playtimes { get; set; }
         public DbSet<Scolding> Scoldings { get; set; }
+
         // Change this if you want to have a different database name in development
         private static string DEVELOPMENT_DATABASE_NAME = "TamagotchiAPIDatabase";
 
