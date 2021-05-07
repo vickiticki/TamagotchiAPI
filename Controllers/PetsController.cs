@@ -112,6 +112,8 @@ namespace TamagotchiAPI.Controllers
             return Ok(pet);
         }
 
+
+
         // POST: api/Pets
         //
         // Creates a new pet in the database.
@@ -132,6 +134,7 @@ namespace TamagotchiAPI.Controllers
             // headers with details of the newly created object.
             return CreatedAtAction("GetPet", new { id = pet.Id }, pet);
         }
+
 
         // DELETE: api/Pets/5
         //
@@ -164,6 +167,92 @@ namespace TamagotchiAPI.Controllers
         private bool PetExists(int id)
         {
             return _context.Pets.Any(pet => pet.Id == id);
+        }
+
+        //Adding Players to a game night
+        //POST /api/GameNights/5/Players
+        [HttpPost("{id}/playtimes")]
+        public async Task<ActionResult<Pet>> CreatePlaytime(int id, Playtime playtime)
+
+        {
+            // First, lets find the pet (by using the ID)
+            var pet = await _context.Pets.FindAsync(id);
+            // If the pet doesn't exist: return a 404 Not found.
+            if (pet == null)
+            {
+                // Return a `404` response to the client indicating we could not find a game night with this id
+                return NotFound();
+            }
+            // Associate the playtime to the given pet.
+            playtime.PetId = pet.Id;
+            // Add the playtime to the database
+            _context.Playtimes.Add(playtime);
+
+            pet.HappinessLevel += 5;
+            pet.HungerLevel += 3;
+            pet.Playtimes.Add(playtime);
+            _context.Entry(pet).State = EntityState.Modified;
+
+
+            await _context.SaveChangesAsync();
+            // Return the new playtime to the response of the API
+            return Ok(playtime);
+        }
+
+
+        [HttpPost("{id}/feedings")]
+        public async Task<ActionResult<Pet>> CreateFeeding(int id, Feeding feeding)
+
+        {
+            // First, lets find the pet (by using the ID)
+            var pet = await _context.Pets.FindAsync(id);
+            // If the game night doesn't exist: return a 404 Not found.
+            if (pet == null)
+            {
+                // Return a `404` response to the client indicating we could not find a game night with this id
+                return NotFound();
+            }
+            // Associate the feeding to the given pet.
+            feeding.PetId = pet.Id;
+            // Add the feeding to the database
+            _context.Feedings.Add(feeding);
+
+            pet.HappinessLevel += 3;
+            pet.HungerLevel -= 5;
+            pet.Feedings.Add(feeding);
+            _context.Entry(pet).State = EntityState.Modified;
+
+
+            await _context.SaveChangesAsync();
+            // Return the new feeding to the response of the API
+            return Ok(feeding);
+        }
+
+        [HttpPost("{id}/scoldings")]
+        public async Task<ActionResult<Pet>> CreateScolding(int id, Scolding scolding)
+
+        {
+            // First, lets find the pet (by using the ID)
+            var pet = await _context.Pets.FindAsync(id);
+            // If the pet doesn't exist: return a 404 Not found.
+            if (pet == null)
+            {
+                // Return a `404` response to the client indicating we could not find a game night with this id
+                return NotFound();
+            }
+            // Associate the scolding to the given pet.
+            scolding.PetId = pet.Id;
+            // Add the scolding to the database
+            _context.Scoldings.Add(scolding);
+
+            pet.HappinessLevel -= 5;
+            pet.Scoldings.Add(scolding);
+            _context.Entry(pet).State = EntityState.Modified;
+
+
+            await _context.SaveChangesAsync();
+            // Return the new scolding to the response of the API
+            return Ok(scolding);
         }
     }
 }
