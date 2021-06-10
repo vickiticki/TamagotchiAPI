@@ -175,7 +175,7 @@ namespace TamagotchiAPI.Controllers
         public async Task<ActionResult<Pet>> CreatePlaytime(int id)
 
         {
-            var playtime = new Playtime()
+            var playtime = new Playtime();
             // First, lets find the pet (by using the ID)
             var pet = await _context.Pets.FindAsync(id);
             // If the pet doesn't exist: return a 404 Not found.
@@ -203,9 +203,10 @@ namespace TamagotchiAPI.Controllers
 
 
         [HttpPost("{id}/feedings")]
-        public async Task<ActionResult<Pet>> CreateFeeding(int id, Feeding feeding)
+        public async Task<ActionResult<Pet>> CreateFeeding(int id)
 
         {
+            var feeding = new Feeding();
             // First, lets find the pet (by using the ID)
             var pet = await _context.Pets.FindAsync(id);
             // If the game night doesn't exist: return a 404 Not found.
@@ -232,9 +233,10 @@ namespace TamagotchiAPI.Controllers
         }
 
         [HttpPost("{id}/scoldings")]
-        public async Task<ActionResult<Pet>> CreateScolding(int id, Scolding scolding)
+        public async Task<ActionResult<Pet>> CreateScolding(int id)
 
         {
+            var scolding = new Scolding();
             // First, lets find the pet (by using the ID)
             var pet = await _context.Pets.FindAsync(id);
             // If the pet doesn't exist: return a 404 Not found.
