@@ -172,9 +172,10 @@ namespace TamagotchiAPI.Controllers
         //Adding Players to a game night
         //POST /api/GameNights/5/Players
         [HttpPost("{id}/playtimes")]
-        public async Task<ActionResult<Pet>> CreatePlaytime(int id, Playtime playtime)
+        public async Task<ActionResult<Pet>> CreatePlaytime(int id)
 
         {
+            var playtime = new Playtime()
             // First, lets find the pet (by using the ID)
             var pet = await _context.Pets.FindAsync(id);
             // If the pet doesn't exist: return a 404 Not found.
@@ -191,6 +192,7 @@ namespace TamagotchiAPI.Controllers
             pet.HappinessLevel += 5;
             pet.HungerLevel += 3;
             pet.Playtimes.Add(playtime);
+            //pet.LastInteractedWith = DateTime.Now;
             _context.Entry(pet).State = EntityState.Modified;
 
 
@@ -220,6 +222,7 @@ namespace TamagotchiAPI.Controllers
             pet.HappinessLevel += 3;
             pet.HungerLevel -= 5;
             pet.Feedings.Add(feeding);
+            //pet.LastInteractedWith = DateTime.Now;
             _context.Entry(pet).State = EntityState.Modified;
 
 
@@ -247,6 +250,7 @@ namespace TamagotchiAPI.Controllers
 
             pet.HappinessLevel -= 5;
             pet.Scoldings.Add(scolding);
+            //pet.LastInteractedWith = DateTime.Now;
             _context.Entry(pet).State = EntityState.Modified;
 
 

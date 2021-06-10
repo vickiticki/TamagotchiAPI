@@ -16,6 +16,7 @@ namespace TamagotchiAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Birthday = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    LastInteractedWith = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     HungerLevel = table.Column<int>(type: "integer", nullable: false),
                     HappinessLevel = table.Column<int>(type: "integer", nullable: false)
                 },

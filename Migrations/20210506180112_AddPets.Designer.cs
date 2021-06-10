@@ -31,6 +31,9 @@ namespace TamagotchiAPI.Migrations
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<DateTime>("LastInteractedWith")
+                    .HasColumnType("timestamp without time zone");
+
                     b.Property<int>("HappinessLevel")
                         .HasColumnType("integer");
 
